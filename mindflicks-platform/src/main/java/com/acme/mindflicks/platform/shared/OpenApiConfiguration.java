@@ -19,13 +19,13 @@ public class OpenApiConfiguration {
         openApi
                 .info(new Info()
                         .title("ACME Mindflicks Platform application REST API documentation.")
-                        .description("This is a sample Spring Boot RESTful service using springdoc-openapi and OpenAPI 3.")
+                        .description("This is an Spring Boot RESTful service for mindflicks platform.")
                         .version("v1.0.0")
                         .license(new License().name("Apache 2.0")
                                 .url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
                         .description("ACME Mindflicks Platform wiki documentation")
-                        .url("https://acme-mindflicks-platform.wiki.github.io/docs"));
+                        .url("https://https://github.com/ReelHaven/Backend"));
         return openApi;
 
     };
