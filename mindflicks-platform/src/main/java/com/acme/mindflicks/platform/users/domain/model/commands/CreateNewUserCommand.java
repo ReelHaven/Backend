@@ -1,6 +1,8 @@
 package com.acme.mindflicks.platform.users.domain.model.commands;
 
-public record CreateNewUserCommand(String name, String lastName, String userName, String birthDate, String phone, String email, String password, String membership) {
+import java.util.Date;
+
+public record CreateNewUserCommand(String name, String lastName, String userName, Date birthDate, String phone, String email, String password, String membership) {
     public CreateNewUserCommand {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("name cannot be null or empty");
@@ -11,7 +13,7 @@ public record CreateNewUserCommand(String name, String lastName, String userName
         if (userName == null || userName.isBlank()) {
             throw new IllegalArgumentException("userName cannot be null or empty");
         }
-        if (birthDate == null || birthDate.isBlank()) {
+        if (birthDate == null || birthDate.toString().isBlank()) {
             throw new IllegalArgumentException("birthDate cannot be null or empty");
         }
         if (phone == null || phone.isBlank()) {
