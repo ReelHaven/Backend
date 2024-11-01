@@ -1,4 +1,4 @@
-package com.acme.mindflicks.platform.users.interfaces.rest;
+package com.acme.mindflicks.platform.users.interfaces.rest.transform;
 
 import com.acme.mindflicks.platform.users.domain.model.commands.CreateNewUserCommand;
 
