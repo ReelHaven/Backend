@@ -1,5 +1,6 @@
 package com.acme.mindflicks.platform.users.domain.model.aggregates;
 
+import com.acme.mindflicks.platform.users.domain.model.commands.CreateNewUserCommand;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,7 +44,17 @@ public class User  extends AbstractAggregateRoot<User> {
 
     protected User(){}
 
-   // public User()
+    public User(CreateNewUserCommand command) {
+        this.name = command.name();
+        this.lastName = command.lastName();
+        this.userName = command.userName();
+        this.birthDate = new Date();
+        this.phone = command.phone();
+        this.email = command.email();
+        this.password = command.password();
+        this.membership = command.membership();
+
+    }
 
 
 
