@@ -1,6 +1,6 @@
 package com.acme.mindflicks.platform.events_1.domain.model.queries;
 
-public record GetEventByContentIdAndTitleQuery(String contentId, String title) {
+public record GetEventByContentIdAndTitleQuery(String title, String contentId) {
     public GetEventByContentIdAndTitleQuery {
         if (contentId == null || contentId.isBlank())
             throw new IllegalArgumentException("contentId cannot be null or empty");

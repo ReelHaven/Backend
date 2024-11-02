@@ -26,7 +26,7 @@ public class EventCommandServiceImpl implements EventCommandService {
      */
     @Override
     public Optional<Event> handle(CreateEventCommand command) {
-        if (eventRepository.existsByTitleAndStartDate(command.title(), command.startDate())) {
+        if (eventRepository.existsByTitleAndContentId(command.title(), command.contentId())) {
             throw new IllegalArgumentException("Event with this title and start date already exists");
         }
         var event = new Event(command);

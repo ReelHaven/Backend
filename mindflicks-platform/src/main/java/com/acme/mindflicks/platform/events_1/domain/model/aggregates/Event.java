@@ -43,6 +43,10 @@ public class Event extends AbstractAggregateRoot<Event> {
     @LastModifiedDate
     private Date updatedAt;
 
+    @Getter
+    @Column(nullable = false)
+    private String contentId;
+
     protected Event() {}
 
     /**
@@ -52,8 +56,6 @@ public class Event extends AbstractAggregateRoot<Event> {
      */
     public Event(CreateEventCommand command) {
         this.title = command.title();
-        this.description = command.description();
-        this.startDate = command.startDate();
-        this.endDate = command.endDate();
+        this.contentId = command.contentId();
     }
 }
