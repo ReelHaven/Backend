@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -27,7 +28,7 @@ public class User  extends AbstractAggregateRoot<User> {
     private String userName;
 
     @Getter
-    private Date birthDate;
+    private String birthDate;
 
     @Getter
     private String phone;
@@ -48,7 +49,7 @@ public class User  extends AbstractAggregateRoot<User> {
         this.name = command.name();
         this.lastName = command.lastName();
         this.userName = command.userName();
-        this.birthDate = new Date();
+        this.birthDate = command.birthDate();
         this.phone = command.phone();
         this.email = command.email();
         this.password = command.password();

@@ -4,9 +4,11 @@ import com.acme.mindflicks.platform.users.domain.model.aggregates.User;
 import com.acme.mindflicks.platform.users.domain.model.commands.CreateNewUserCommand;
 import com.acme.mindflicks.platform.users.domain.services.UserCommandService;
 import com.acme.mindflicks.platform.users.infrastucture.persistence.jpa.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserServiceCommandImpl implements UserCommandService {
 
     private final UserRepository userRepository;
