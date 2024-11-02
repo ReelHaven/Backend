@@ -1,4 +1,4 @@
-package com.acme.mindflicks.platform.shared.infrastucture.persistence.jpa.strategy;
+package com.acme.mindflicks.platform.shared;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
