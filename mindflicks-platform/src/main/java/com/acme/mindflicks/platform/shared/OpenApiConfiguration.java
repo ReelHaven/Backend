@@ -18,7 +18,7 @@ public class OpenApiConfiguration {
 
         openApi
                 .info(new Info()
-                        .title("ACME Mindflicks Platform application REST API documentation.")
+                        .title("ACME Mindflix Platform application REST API documentation.")
                         .description("This is an Spring Boot RESTful service for mindflicks platform.")
                         .version("v1.0.0")
                         .license(new License().name("Apache 2.0")

@@ -1,6 +1,7 @@
 package com.acme.mindflicks.platform.events.domain.model.aggregates;
 
 import com.acme.mindflicks.platform.events.domain.model.commands.CreateEventCommand;
+import com.acme.mindflicks.platform.shared.domain.entities.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,12 +13,7 @@ import java.util.Date;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Event extends AbstractAggregateRoot<Event> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    private Long id;
+public class Event extends AuditableAbstractAggregateRoot<Event> {
 
     @Getter
     @Column(nullable = false)
@@ -29,19 +25,11 @@ public class Event extends AbstractAggregateRoot<Event> {
 
     @Getter
     @Column(nullable = false)
-    private Date startDate;
+    private String startDate;
 
     @Getter
     @Column(nullable = false)
-    private Date endDate;
-
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
-    private Date createdAt;
-
-    @Column(nullable = false)
-    @LastModifiedDate
-    private Date updatedAt;
+    private String endDate;
 
     @Getter
     @Column(nullable = false)
@@ -56,6 +44,9 @@ public class Event extends AbstractAggregateRoot<Event> {
      */
     public Event(CreateEventCommand command) {
         this.title = command.title();
+        this.description = command.description();
+        this.startDate = command.startDate();
+        this.endDate = command.endDate();
         this.contentId = command.contentId();
     }
 }

@@ -2,7 +2,8 @@ package com.acme.mindflicks.platform.events.domain.services;
 
 import com.acme.mindflicks.platform.events.domain.model.aggregates.Event;
 import com.acme.mindflicks.platform.events.domain.model.queries.GetAllEventsByTitleQuery;
-import com.acme.mindflicks.platform.events.domain.model.queries.GetEventByContentIdQuery;
+import com.acme.mindflicks.platform.events.domain.model.queries.GetAllEventsQuery;
+import com.acme.mindflicks.platform.events.domain.model.queries.GetEventByIdQuery;
 import com.acme.mindflicks.platform.events.domain.model.queries.GetEventByContentIdAndTitleQuery;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface EventQueryService {
      */
     List<Event> handle(GetAllEventsByTitleQuery query);
 
-    Optional<Event> handle(GetEventByContentIdQuery query);
+    Optional<Event> handle(GetEventByIdQuery query);
 
     /**
      * Handle the get Event entity by content ID and title
@@ -33,4 +34,6 @@ public interface EventQueryService {
      * @see GetEventByContentIdAndTitleQuery
      */
     Optional<Event> handle(GetEventByContentIdAndTitleQuery query);
+
+    List<Event> handle(GetAllEventsQuery query);
 }
