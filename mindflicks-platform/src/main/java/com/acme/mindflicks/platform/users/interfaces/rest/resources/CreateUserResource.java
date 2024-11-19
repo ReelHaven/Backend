@@ -1,10 +1,10 @@
-package com.acme.mindflicks.platform.users.interfaces.rest.transform;
+package com.acme.mindflicks.platform.users.interfaces.rest.resources;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.acme.mindflicks.platform.users.domain.model.valueobjects.EmailAddress;
+import com.acme.mindflicks.platform.users.domain.model.valueobjects.Membership;
 
 public record CreateUserResource(String name, String lastName, String userName, String birthDate,
-                                 String phone, String email, String password, String membership) {
+                                 String phone, String email, String password, Membership membership) {
 
     public CreateUserResource {
         if (name == null || name.isBlank()) {
@@ -23,14 +23,14 @@ public record CreateUserResource(String name, String lastName, String userName, 
         if (phone == null || phone.isBlank()) {
             throw new IllegalArgumentException("Phone cannot be null or empty");
         }
-        if (email == null || email.isBlank()) {
+        if (email == null) {
             throw new IllegalArgumentException("Email cannot be null or empty");
         }
         if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
-        if (membership == null || membership.isBlank()) {
-            throw new IllegalArgumentException("Membership cannot be null or empty");
+        if (membership == null) {
+            throw new IllegalArgumentException("Membership cannot be null ");
         }
     }
 

@@ -7,17 +7,15 @@ import com.acme.mindflicks.platform.users.domain.model.queries.GetUserByUserName
 import com.acme.mindflicks.platform.users.domain.services.UserCommandService;
 import com.acme.mindflicks.platform.users.domain.services.UserQueryService;
 import com.acme.mindflicks.platform.users.interfaces.rest.resources.UserResource;
-import com.acme.mindflicks.platform.users.interfaces.rest.resources.UserResourceFromEntityAssembler;
+import com.acme.mindflicks.platform.users.interfaces.rest.transform.UserResourceFromEntityAssembler;
 import com.acme.mindflicks.platform.users.interfaces.rest.transform.CreateUserCommandFromResourceAssembler;
-import com.acme.mindflicks.platform.users.interfaces.rest.transform.CreateUserResource;
+import com.acme.mindflicks.platform.users.interfaces.rest.resources.CreateUserResource;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -26,6 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value="/api/v1/users", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "Users")
 public class UserController {
 
     private final UserCommandService userCommandService;
@@ -35,7 +34,7 @@ public class UserController {
         this.userCommandService = userCommandService;
         this.userQueryService = userQueryService;
     }
-    
+
 
     @Operation(
             summary = "Create a user",
@@ -63,7 +62,7 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Get a user by username and password",
+            summary = "Sign in",
             description = "Get a user by the provided username and password"
     )
     @GetMapping
