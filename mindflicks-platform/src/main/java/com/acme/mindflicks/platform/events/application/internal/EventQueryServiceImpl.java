@@ -2,7 +2,8 @@ package com.acme.mindflicks.platform.events.application.internal;
 
 import com.acme.mindflicks.platform.events.domain.model.aggregates.Event;
 import com.acme.mindflicks.platform.events.domain.model.queries.GetAllEventsByTitleQuery;
-import com.acme.mindflicks.platform.events.domain.model.queries.GetEventByContentIdQuery;
+import com.acme.mindflicks.platform.events.domain.model.queries.GetAllEventsQuery;
+import com.acme.mindflicks.platform.events.domain.model.queries.GetEventByIdQuery;
 import com.acme.mindflicks.platform.events.domain.model.queries.GetEventByContentIdAndTitleQuery;
 import com.acme.mindflicks.platform.events.domain.services.EventQueryService;
 import com.acme.mindflicks.platform.events.infrastructure.persistence.jpa.EventRepository;
@@ -38,10 +39,10 @@ public class EventQueryServiceImpl implements EventQueryService {
      *
      * @param query the get Event entity by title query
      * @return The Event entity if exists
-     * @see GetEventByContentIdQuery
+     * @see GetEventByIdQuery
      */
     @Override
-    public Optional<Event> handle(GetEventByContentIdQuery query) {
+    public Optional<Event> handle(GetEventByIdQuery query) {
         return eventRepository.findById(query.id());
     }
 
@@ -55,5 +56,10 @@ public class EventQueryServiceImpl implements EventQueryService {
     @Override
     public Optional<Event> handle(GetEventByContentIdAndTitleQuery query) {
         return eventRepository.findByTitleAndContentId(query.contentId(), query.title());
+    }
+
+    @Override
+    public List<Event> handle(GetAllEventsQuery query) {
+        return eventRepository.findAll();
     }
 }
