@@ -64,63 +64,6 @@ public class ContentController {
         return ResponseEntity.ok(contentResources);
     }
 
-    private ResponseEntity<List<ContentResource>> getAllContentsByTitle(String title) {
-        var getAllContentsByTitleQuery = new GetAllContentByTitleQuery(title);
-        var contents = contentQueryService.handle(getAllContentsByTitleQuery);
-        if (contents.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var contentResources = contents.stream()
-                .map(ContentResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(contentResources);
-    }
-
-    private ResponseEntity<List<ContentResource>> getAllContentsByType(String type) {
-        var getAllContentsByTypeQuery = new GetAllContentByTypeQuery(type);
-        var contents = contentQueryService.handle(getAllContentsByTypeQuery);
-        if (contents.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var contentResources = contents.stream()
-                .map(ContentResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(contentResources);
-    }
-
-    private ResponseEntity<List<ContentResource>> getAllContentsByCategory(String category) {
-        var getAllContentsByCategoryQuery = new GetAllContentByCategoryQuery(category);
-        var contents = contentQueryService.handle(getAllContentsByCategoryQuery);
-        if (contents.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var contentResources = contents.stream()
-                .map(ContentResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(contentResources);
-    }
-
-    private ResponseEntity<List<ContentResource>> getAllContentsByCreatorId(String creatorId) {
-        var getAllContentsByCreatorIdQuery = new GetAllContentByCreatorIdQuery(creatorId);
-        var contents = contentQueryService.handle(getAllContentsByCreatorIdQuery);
-        if (contents.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        var contentResources = contents.stream()
-                .map(ContentResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(contentResources);
-    }
-
-    private ResponseEntity<ContentResource> getContentsByTitleAndCreatorId(String title, String creatorId) {
-        var getContentsByTitleAndCreatorIdQuery = new GetContentByTitleAndCreatorId(title, creatorId);
-        var content = contentQueryService.handle(getContentsByTitleAndCreatorIdQuery);
-        if (content.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return content.map(source ->  ResponseEntity.ok(ContentResourceFromEntityAssembler.toResourceFromEntity(source)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     @Operation(
             summary = "Get content with param",
