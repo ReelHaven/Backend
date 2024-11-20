@@ -46,4 +46,9 @@ public class ContentQueryServiceImpl implements ContentQueryService {
     public Optional<Content> handle(GetContentByTitleAndCreatorId query) {
         return contentRepository.findByTitleAndCreatorId(query.title(), query.creatorId());
     }
+
+    @Override
+    public Optional<Content> handle(GetContentByIdQuery query) {
+        return contentRepository.findById(query.contentId());
+    }
 }

@@ -51,15 +51,7 @@ public class ContentController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @Operation(
-            summary = "Get all content",
-            description = "Get all content in database"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "get All Content"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-    })
-    @GetMapping("/contents")
+
     public ResponseEntity<List<ContentResource>> getAllContents() {
         var getAllContentsQuery = new GetAllContentQuery();
         var contents = contentQueryService.handle(getAllContentsQuery);
@@ -139,40 +131,44 @@ public class ContentController {
             @ApiResponse(responseCode = "404", description = "Bad Request"),
     })
     @GetMapping
-    /*public ResponseEntity<?> getContentWithParameters(@Parameter(name= "params", hidden = true) @RequestParam Map<String, String> params) {
-        if (params.containsKey("title") && params.containsKey("creatorId")) {
-            return getContentsByTitleAndCreatorId(params.get("title"), params.get("creatorId"));
-        } else if (params.containsKey("title")) {
-            return getAllContentsByTitle(params.get("title"));
-        } else if (params.containsKey("type")) {
-            return getAllContentsByType(params.get("type"));
-        } else if (params.containsKey("category")) {
-            return getAllContentsByCategory(params.get("category"));
-        } else if (params.containsKey("creatorId")) {
-            return getAllContentsByCreatorId(params.get("creatorId"));
-        }
-        return ResponseEntity.badRequest().build();
-    }*/
-
     public ResponseEntity<?> getContentWithParameters(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String creatorId,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String category) {
-
-        if (title != null && creatorId != null) {
-            return getContentsByTitleAndCreatorId(title, creatorId);
-        } else if (title != null) {
-            return getAllContentsByTitle(title);
-        } else if (type != null) {
-            return getAllContentsByType(type);
-        } else if (category != null) {
-            return getAllContentsByCategory(category);
-        } else if (creatorId != null) {
-            return getAllContentsByCreatorId(creatorId);
+        if (title == null && creatorId == null && type == null && category == null) {
+            return getAllContents();
         }
-        return ResponseEntity.badRequest().build();
+
+        var filteredContents = contentQueryService.handle(new GetAllContentQuery()).stream()
+                .filter(content -> title == null || content.getTitle().equalsIgnoreCase(title))
+                .filter(content -> creatorId == null || content.getCreatorId().equals(creatorId))
+                .filter(content -> type == null || content.getType().equalsIgnoreCase(type))
+                .filter(content -> category == null || content.getCategory().equalsIgnoreCase(category))
+                .toList();
+
+        if (filteredContents.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var contentResources = filteredContents.stream()
+                .map(ContentResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+
+        return ResponseEntity.ok(contentResources);
     }
 
+    @GetMapping("/{contentId}")
+    @Operation(summary = "Get content by id", description = "Get content by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "content found"),
+            @ApiResponse(responseCode = "404", description = "content not found")})
+    public ResponseEntity<ContentResource> getContentById(@PathVariable Long contentId) {
+        var getContentByIdQuery = new GetContentByIdQuery(contentId);
+        var content = contentQueryService.handle(getContentByIdQuery);
+        if (content.isEmpty()) return ResponseEntity.notFound().build();
+        var contentEntity = content.get();
+        var contentResource = ContentResourceFromEntityAssembler.toResourceFromEntity(contentEntity);
+        return ResponseEntity.ok(contentResource);
+    }
 
 }
