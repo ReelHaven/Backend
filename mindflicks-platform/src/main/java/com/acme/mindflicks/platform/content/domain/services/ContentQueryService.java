@@ -19,4 +19,6 @@ public interface ContentQueryService {
     List<Content> handle(GetAllContentByCreatorIdQuery query);
 
     Optional<Content> handle(GetContentByTitleAndCreatorId query);
+
+    Optional<Content> handle(GetContentByIdQuery query);
 }
